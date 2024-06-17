@@ -1,11 +1,9 @@
 import java.util.ArrayList;
 public class Delete {
-    public static int delete (ArrayList<Integer> myList, int size) {
-        if (size <= 0) {
-            myList.remove(0);
-            return myList.size();
-        }
+    public static int delete (ArrayList<Integer> myList) {
+        if (myList.size() <= 1) return 0;
+        myList.remove(0);
 
-        return delete(myList, size - 1);
+        return 1 + delete(myList);
     }
 }
