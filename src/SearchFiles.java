@@ -4,32 +4,29 @@ import java.util.Arrays;
 
 public class SearchFiles {
     public static ArrayList createList() {
-        ArrayList<File> myList = new ArrayList<File>();
-        File root = new File(".");
-        ArrayList<File> expand = new ArrayList<File>();
-        expand.add(root);
+        ArrayList<File> myList = new ArrayList<File>(); // пустой список, в котором будут файлы
+        File root = new File("."); // директория каталога
+        ArrayList<File> expand = new ArrayList<File>(); // список каталога
+        expand.add(root); // заполняю список каталога
 
-        return SearchFiles(myList, root, expand);
+        return SearchFiles(myList, expand);
     }
 
-    public static ArrayList SearchFiles(ArrayList<File> myList, File root, ArrayList<File> expand) {
-        if (expand.size() == 0) return myList;
-        File[] expandCopy = expand.toArray(new File[expand.size()]);
-        expand.clear();
-        for (File file : expandCopy) {
-            if (file.isDirectory()) {
-                expand.addAll(Arrays.asList(file.listFiles()));
+    public static ArrayList<File> SearchFiles(ArrayList<File> myList, ArrayList<File> expand) {
+        if (expand.isEmpty()) return myList; // файлов нет, каталогов нет
+
+        File[] expandCopy = expand.toArray(new File[expand.size()]); // копия списка каталога
+        expand.clear(); // обнуляю список каталога
+
+        for (File file : expandCopy) { // цикл по каталогу
+            if (file.isDirectory()) { // если файл директория, то погружаюсь в директорию
+                expand.addAll(Arrays.asList(file.listFiles())); // перезаписываю список каталога подкаталогом
             } else {
-                myList.add(file);
+                myList.add(file); // добавляю файл в список
             }
         }
-        SearchFiles(myList, root, expand);
-        return myList;
 
+        return SearchFiles(myList, expand); // возвращаю заполненный список с файлами
     }
-
-    public static void main(String[] args) {
-        System.out.println(createList());
-    }
-
 }
+
