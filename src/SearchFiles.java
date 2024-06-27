@@ -3,16 +3,17 @@ import java.io.File;
 import java.util.Arrays;
 
 public class SearchFiles {
-    public static ArrayList SearchFiles(String path) {
-        ArrayList<File> myList = new ArrayList<File>();
+
+    public static ArrayList<File> myList = new ArrayList<File>();
+    public static ArrayList<File> expand = new ArrayList<File>();
+
+    public static ArrayList<File> SearchFiles(String path) {
         File root = new File(path);
-        ArrayList<File> expand = new ArrayList<File>();
-        expand.add(root);
 
-        return createList(myList, expand);
-    }
+        if (myList.isEmpty() && expand.isEmpty()) {
+            expand.add(root);
+        }
 
-    private static ArrayList<File> createList(ArrayList<File> myList, ArrayList<File> expand) {
         if (expand.isEmpty()) return myList;
 
         File[] expandCopy = expand.toArray(new File[expand.size()]);
@@ -26,7 +27,6 @@ public class SearchFiles {
             }
         }
 
-        return createList(myList, expand);
+        return SearchFiles(path);
     }
 }
-
