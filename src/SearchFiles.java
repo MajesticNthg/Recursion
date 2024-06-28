@@ -1,32 +1,20 @@
 import java.util.ArrayList;
 import java.io.File;
-import java.util.Arrays;
+import java.util.List;
 
 public class SearchFiles {
+    public static List<File> SearchFiles(File root) {
+        ArrayList<File> myList = new ArrayList<>();
+        File[] expand = root.listFiles();
 
-    public static ArrayList<File> myList = new ArrayList<File>();
-    public static ArrayList<File> expand = new ArrayList<File>();
-
-    public static ArrayList<File> SearchFiles(String path) {
-        File root = new File(path);
-
-        if (myList.isEmpty() && expand.isEmpty()) {
-            expand.add(root);
-        }
-
-        if (expand.isEmpty()) return myList;
-
-        File[] expandCopy = expand.toArray(new File[expand.size()]);
-        expand.clear();
-
-        for (File file : expandCopy) {
+        for (File file : expand) {
             if (file.isDirectory()) {
-                expand.addAll(Arrays.asList(file.listFiles()));
+                myList.addAll(SearchFiles(file));
             } else {
                 myList.add(file);
             }
         }
 
-        return SearchFiles(path);
+        return myList;
     }
 }
