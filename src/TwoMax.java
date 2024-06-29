@@ -3,7 +3,7 @@ import java.util.ArrayList;
 public class TwoMax {
     public static int enterMax (ArrayList <Integer> myList) {
 
-        return secondMax(myList, myList.get(0), myList.get(0), 0);
+        return secondMax(myList, myList.get(0), myList.get(1), 0);
 
     }
     public static int secondMax (ArrayList<Integer> myList, int max1, int max2, int amt) {
